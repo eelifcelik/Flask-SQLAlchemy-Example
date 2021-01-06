@@ -1,2 +1,2 @@
 # Flask-SQLAlchemy-Example
- An example cargo management web page using Flask and SqlAlchemy.
+ An example cargo management system web page using Flask and SqlAlchemy.
