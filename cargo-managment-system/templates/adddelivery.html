@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+{% from "formhelpers.html" import render_field %}
+
+
+<div class= "container">
+    <div class="jumbotron p-3">
+
+        <h2> Add Delivery Car </h2>
+        <hr>
+    
+        <form  method = "post">
+
+            {{ render_field(form.model, class= "form-control") }}
+            {{ render_field(form.licence_id, class= "form-control") }}
+            {{ render_field(form.deliverycar_dep, class= "form-control") }}
+    
+            <br>
+            <button type="submit" class="btn btn-info">Add New Delivery Car</button>   
+        </form>
+
+        <br><br>
+
+
+    </div>    
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+{% endblock %}

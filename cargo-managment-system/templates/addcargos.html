@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+{% from "formhelpers.html" import render_field %}
+
+
+<div class= "container">
+    <div class="jumbotron p-3">
+
+        <h2> Add Cargo </h2>
+        <hr>
+    
+        <form  method = "post">
+
+            {{ render_field(form.cargo_id, class= "form-control") }}
+            {{ render_field(form.weight, class= "form-control") }}
+            {{ render_field(form.shipper, class= "form-control") }}
+            {{ render_field(form.customer_name, class= "form-control") }}
+            {{ render_field(form.customer_surname, class= "form-control") }}
+            {{ render_field(form.adress, class= "form-control") }}
+            {{ render_field(form.customer_phone, class= "form-control") }}
+            {{ render_field(form.cargo_department, class= "form-control") }}
+               
+            <br>
+            <button type="submit" class="btn btn-info"> Add New Cargo </button>   
+        </form>
+
+        <br><br>
+
+
+    </div>    
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+{% endblock %}

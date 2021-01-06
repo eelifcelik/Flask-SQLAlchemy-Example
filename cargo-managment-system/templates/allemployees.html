@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+{% from "formhelpers.html" import render_field %}
+
+
+<div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        
+        <div class="jumbotron p-3" >
+          <h2>Employee List</h2>
+
+            {% with messages = get_flashed_messages() %}
+
+            {% if messages %}
+
+            {% for message in messages %}
+
+            <div class="alert alert-success alert-dismissable" role="alert">
+
+                <button type="button" class="close" data-dismiss="alert" aria-label="close">
+
+                    <span aria-hidden="true">x</span>
+
+                </button>
+
+            {{message}}
+
+            </div>
+            {% endfor %}
+
+            {% endif %}
+            {% endwith %}
+
+
+          <table class="table table-bordered table-hover ">
+
+              <tr>
+
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Ssn</th>
+                <th>Phone</th>
+                <th>Department</th>
+                <th>Action</th>
+
+              </tr>
+
+              {% for row in employees %}
+
+              <tr>
+
+                <td>{{ row.name  }}</td>
+                <td>{{ row.surname }}</td>
+                <td>{{ row.ssn }}</td>
+                <td>{{ row.phone }}</td>
+                <td>{{ row.employee_department }}</td>
+                <td>
+                  <a href="/employee/update/{{ row.ssn }}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{ row.ssn }}">Edit</a>
+                  <a href="/employee/delete/{{ row.ssn }}" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure to delete?') ">Delete</a>
+
+                </td>
+
+              </tr>
+
+              <div id="modaledit{{ row.ssn }}" class="modal fade" role="dialog">
+               <div class="modal-dialog">
+
+                  <div class="modal-content">
+
+                     <div class="modal-header">
+                        <h4 class="modal-title">Update Information</h4>
+                     </div>
+   
+                     <div class="modal-body">   
+                        <form action="{{ url_for('EmployeeUpdate') }}" method="POST">
+             
+             
+                           <div class="form-group">
+                              <label>Name:</label>
+                              <input type="hidden"  name="ssn" value="{{ row.ssn }}">
+                               
+                              <input type="text" class="form-control" name="name" value="{{ row.name }}">
+                           </div>
+             
+                           <div class="form-group">
+                              <label>Surname</label>
+                              <input type="text" class="form-control" name="surname" value="{{ row.surname }}">
+                           </div>
+
+                           <div class="form-group">
+                              <label>Phone</label>
+                              <input type="text" class="form-control" name="phone" value="{{ row.phone }}">
+                           </div>
+
+                           <div class="form-group">
+                              <label>Department</label>
+                              <input type="text" class="form-control" name="employee_department" value=" {{ row.employee_department }}">
+                           </div>
+
+                           <div class="form-group">
+
+                              <button class="btn btn-primary" type="submit">Update</button>
+
+                           </div>
+
+                        </form>
+             
+                     </div>
+             
+             
+                     <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                     </div>
+             
+             
+                  </div>
+             
+             
+               </div>
+
+             {% endfor %}
+
+            </table>
+
+        </div>
+      </div>
+    </div>  
+</div>
+
+{% endblock %}
+
+
+

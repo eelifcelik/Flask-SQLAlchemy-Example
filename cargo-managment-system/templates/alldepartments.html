@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+{% from "formhelpers.html" import render_field %}
+
+
+<div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        
+        <div class="jumbotron p-3" >
+          <h2>Department List</h2>
+
+            {% with messages = get_flashed_messages() %}
+
+            {% if messages %}
+
+            {% for message in messages %}
+
+            <div class="alert alert-success alert-dismissable" role="alert">
+
+                <button type="button" class="close" data-dismiss="alert" aria-label="close">
+
+                    <span aria-hidden="true">x</span>
+
+                </button>
+
+            {{message}}
+
+            </div>
+            {% endfor %}
+
+            {% endif %}
+            {% endwith %}
+
+
+          <table class="table table-bordered table-hover ">
+
+              <tr>
+
+                <th>Location</th>
+                <th>Department Name</th>
+                <th>Department Number</th>
+                <th>Region</th>
+                <th>Action</th>
+
+              </tr>
+
+              {% for row in departments %}
+
+              <tr>
+
+                <td>{{ row.location  }}</td>
+                <td>{{ row.dep_name }}</td>
+                <td>{{ row.dep_num }}</td>
+                <td>{{ row.region }}</td>
+                
+                <td>
+                  <a href="/departments/update/{{ row.dep_num }}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{ row.dep_num }}">Edit</a>
+                  <a href="/departments/delete/{{ row.dep_num }}" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure to delete?') ">Delete</a>
+
+                </td>
+
+              </tr>
+
+              <div id="modaledit{{ row.dep_num }}" class="modal fade" role="dialog">
+               <div class="modal-dialog">
+
+                  <div class="modal-content">
+
+                     <div class="modal-header">
+                        <h4 class="modal-title">Update Information</h4>
+                     </div>
+   
+                     <div class="modal-body">   
+                        <form action="{{ url_for('DepartmentUpdate') }}" method="POST">
+             
+             
+                           <div class="form-group">
+                              <label>Location:</label>
+                              <input type="hidden"  name="dep_num" value="{{ row.dep_num }}">
+                               
+                              <input type="text" class="form-control" name="location" value="{{ row.location }}">
+                           </div>
+             
+                           <div class="form-group">
+                              <label>Department Name</label>
+                              <input type="text" class="form-control" name="dep_name" value="{{ row.dep_name }}">
+                           </div>
+
+                           <div class="form-group">
+                              <label>Region</label>
+                              <input type="text" class="form-control" name="region" value="{{ row.region }}">
+                           </div>
+
+                           <div class="form-group">
+
+                              <button class="btn btn-primary" type="submit">Update</button>
+
+                           </div>
+
+                        </form>
+             
+                     </div>
+             
+             
+                     <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                     </div>
+             
+             
+                  </div>
+             
+             
+               </div>
+
+             {% endfor %}
+
+            </table>
+
+        </div>
+      </div>
+    </div>  
+</div>
+
+{% endblock %}
+
+
+

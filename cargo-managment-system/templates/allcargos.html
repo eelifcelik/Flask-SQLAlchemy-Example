@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+{% from "formhelpers.html" import render_field %}
+
+
+<div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        
+        <div class="jumbotron p-3" >
+          <h2>Cargo List</h2>
+
+            {% with messages = get_flashed_messages() %}
+
+            {% if messages %}
+
+            {% for message in messages %}
+
+            <div class="alert alert-success alert-dismissable" role="alert">
+
+                <button type="button" class="close" data-dismiss="alert" aria-label="close">
+
+                    <span aria-hidden="true">x</span>
+
+                </button>
+
+            {{message}}
+
+            </div>
+            {% endfor %}
+
+            {% endif %}
+            {% endwith %}
+
+
+          <table class="table table-bordered table-hover ">
+
+              <tr>
+
+                <th>Cargo ID</th>
+                <th>Weight</th>
+                <th>Shipper</th>
+                <th>Customer Name</th>
+                <th>Customer Surname</th>
+                <th>Adress</th>
+                <th>Customer Phone</th>
+                <th>Department</th>
+                <th>Action</th>
+
+              </tr>
+
+              {% for row in cargos %}
+
+              <tr>
+
+                <td>{{ row.cargo_id  }}</td>
+                <td>{{ row.weight }}</td>
+                <td>{{ row.shipper }}</td>
+                <td>{{ row.customer_name }}</td>
+                <td>{{ row.customer_surname }}</td>
+                <td>{{ row.adress }}</td>
+                <td>{{ row.customer_phone }}</td>
+                <td>{{ row.cargo_department }}</td>
+
+                <td>
+                  <a href="/cargos/update/{{ row.cargo_id }}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{ row.cargo_id }}">Edit</a>
+                  <a href="/cargos/delete/{{ row.cargo_id }}" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure to delete?') ">Delete</a>
+
+                </td>
+
+              </tr>
+
+              <div id="modaledit{{ row.cargo_id }}" class="modal fade" role="dialog">
+               <div class="modal-dialog">
+
+                  <div class="modal-content">
+
+                     <div class="modal-header">
+                        <h4 class="modal-title">Update Information</h4>
+                     </div>
+   
+                     <div class="modal-body">   
+                        <form action="{{ url_for('CargoUpdate') }}" method="POST">
+             
+             
+                           <div class="form-group">
+                              <label>Weight:</label>
+                              <input type="hidden"  name="cargo_id" value="{{ row.cargo_id }}">
+                               
+                              <input type="text" class="form-control" name="weight" value="{{ row.weight }}">
+                           </div>
+             
+                           <div class="form-group">
+                              <label>Shipper</label>
+                              <input type="text" class="form-control" name="shipper" value="{{ row.shipper }}">
+                           </div>
+
+                           <div class="form-group">
+                              <label>Customer Name</label>
+                              <input type="text" class="form-control" name="customer_name" value="{{ row.customer_name }}">
+                           </div>
+
+                           <div class="form-group">
+                              <label>Customer Surname</label>
+                              <input type="text" class="form-control" name="customer_surname" value=" {{ row.customer_surname}}">
+                           </div>
+
+                           <div class="form-group">
+                              <label>Adress</label>
+                              <input type="text" class="form-control" name="adress" value="{{ row.adress }}">
+                           </div>
+
+                           <div class="form-group">
+                              <label>Customer Phone</label>
+                              <input type="text" class="form-control" name="customer_phone" value=" {{ row.customer_phone}}">
+                           </div>
+
+                           <div class="form-group">
+                              <label>Cargo Department</label>
+                              <input type="text" class="form-control" name="cargo_department" value=" {{ row.cargo_department }}">
+                           </div>
+
+                           <div class="form-group">
+
+                              <button class="btn btn-primary" type="submit">Update</button>
+
+                           </div>
+
+                        </form>
+             
+                     </div>
+             
+             
+                     <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                     </div>
+             
+             
+                  </div>
+             
+             
+               </div>
+
+             {% endfor %}
+
+            </table>
+
+        </div>
+      </div>
+    </div>  
+</div>
+
+{% endblock %}
